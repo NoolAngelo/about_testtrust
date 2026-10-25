@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TestTrust | Monitor freely. Trust deeply.</title>
+    <meta
+      name="description"
+      content="TestTrust is a cheating-detection web extension for Chromium browsers that helps proctors secure online exams, with no camera."
+    />
+    <style>
+      :root {
+        --navy: #06285a;
+        --blue: #0a78fa;
+        --sky: #4fa6ff;
+        --bg: #f2f7fe;
+        --ink: #0b1f4d;
+        --mut: #4a5a75;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          16px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          Arial,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      header,
+      section,
+      footer {
+        padding: 36px 20px;
+      }
+      .wrap {
+        max-width: 640px;
+        margin: auto;
+      }
+      header {
+        background: linear-gradient(160deg, var(--navy), #0a4fb8);
+        color: #fff;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.6rem;
+        margin: 0.2em 0 0;
+      }
+      h1 span,
+      h2 span {
+        color: var(--sky);
+      }
+      h2 {
+        margin: 0 0 0.6em;
+        font-size: 1.5rem;
+      }
+      h2 span {
+        color: var(--blue);
+      }
+      .tag {
+        font-style: italic;
+        opacity: 0.9;
+        margin: 0.2em 0 1em;
+      }
+      .btn {
+        display: inline-block;
+        background: #fff;
+        color: var(--navy);
+        font: 700 1rem inherit;
+        padding: 12px 22px;
+        border-radius: 999px;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+      }
+      .btn.go {
+        background: var(--blue);
+        color: #fff;
+        width: 100%;
+        margin-top: 12px;
+      }
+      .btn:disabled {
+        opacity: 0.6;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 12px;
+      }
+      .card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 2px 10px #06285a1a;
+      }
+      .card b {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .n {
+        display: inline-grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      ul.chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+      }
+      .chips li {
+        list-style: none;
+        background: #dcebfc;
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-weight: 600;
+      }
+      .alt {
+        background: #fff;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+      }
+      legend {
+        font-weight: 700;
+        margin: 0 auto 6px;
+      }
+      .row {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+      }
+      .row input {
+        position: absolute;
+        opacity: 0;
+      }
+      .row label {
+        font-size: 3rem;
+        line-height: 1;
+        padding: 0 4px;
+        color: #cbd5e1;
+        cursor: pointer;
+      }
+      .row input:checked ~ label,
+      .row label:hover,
+      .row label:hover ~ label {
+        color: #f59e0b;
+      }
+      .row input:focus-visible + label {
+        outline: 3px solid var(--blue);
+        border-radius: 6px;
+      }
+      #hint {
+        min-height: 1.5em;
+        font-weight: 700;
+        color: var(--blue);
+        margin: 4px 0 10px;
+      }
+      textarea {
+        width: 100%;
+        font: inherit;
+        padding: 10px;
+        border: 1px solid #b5c4dc;
+        border-radius: 10px;
+        resize: vertical;
+      }
+      #msg {
+        min-height: 1.4em;
+        color: var(--mut);
+        text-align: center;
+        margin: 8px 0 0;
+      }
+      .thanks {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      footer {
+        text-align: center;
+        color: var(--mut);
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <!-- swap this SVG for <img src="logo.png" width="72" alt="TestTrust logo"> to use your real logo -->
+        <svg viewBox="0 0 64 74" width="72" aria-hidden="true">
+          <path
+            d="M32 2 60 12v28c0 16-12 27-28 32C16 67 4 56 4 40V12z"
+            fill="#0A78FA"
+          />
+          <path
+            d="M20 38l9 9 16-18"
+            fill="none"
+            stroke="#fff"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h1>Test<span>Trust</span></h1>
+        <p class="tag">Monitor freely. Trust deeply.</p>
+        <p>
+          A cheating-detection web extension for Chromium browsers that helps
+          proctors and educators secure online exams, with no camera.
+        </p>
+        <a class="btn" href="#rate">Rate TestTrust</a>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+        <h2>Why <span>TestTrust?</span></h2>
+        <div class="grid">
+          <div class="card">
+            <b>Private</b>No camera, microphone, or biometric data. It watches
+            the browser, not the student.
+          </div>
+          <div class="card">
+            <b>Real-time</b>Suspicious activity reaches the proctor's dashboard
+            instantly.
+          </div>
+          <div class="card">
+            <b>Simple</b>Works on Chrome, Edge, and Opera. Easy for proctors to
+            use.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap">
+        <h2>How it <span>works</span></h2>
+        <div class="grid">
+          <div class="card">
+            <span class="n">1</span><b>Student takes the exam</b>The extension
+            runs quietly in their browser.
+          </div>
+          <div class="card">
+            <span class="n">2</span><b>Events are sent</b>Saved instantly to a
+            secure cloud database.
+          </div>
+          <div class="card">
+            <span class="n">3</span><b>Proctor reviews</b>The dashboard ranks
+            students from Low to Critical risk.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>What it <span>notices</span></h2>
+        <ul class="chips">
+          <li>Tab switching</li>
+          <li>Window or app switching</li>
+          <li>Copy and paste</li>
+          <li>Idle time</li>
+          <li>Detached tabs</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="alt" id="rate">
+      <div class="wrap">
+        <h2>Rate <span>TestTrust</span></h2>
+        <form id="f">
+          <fieldset class="stars">
+            <legend>How would you rate TestTrust?</legend>
+            <div class="row">
+              <input type="radio" name="r" id="s5" value="5" /><label
+                for="s5"
+                title="5 stars"
+                >&#9733;</label
+              >
+              <input type="radio" name="r" id="s4" value="4" /><label
+                for="s4"
+                title="4 stars"
+                >&#9733;</label
+              >
+              <input type="radio" name="r" id="s3" value="3" /><label
+                for="s3"
+                title="3 stars"
+                >&#9733;</label
+              >
+              <input type="radio" name="r" id="s2" value="2" /><label
+                for="s2"
+                title="2 stars"
+                >&#9733;</label
+              >
+              <input type="radio" name="r" id="s1" value="1" /><label
+                for="s1"
+                title="1 star"
+                >&#9733;</label
+              >
+            </div>
+          </fieldset>
+          <div id="hint" aria-live="polite"></div>
+          <label for="c" class="sr">Comments (optional)</label>
+          <textarea
+            id="c"
+            name="comment"
+            rows="3"
+            maxlength="300"
+            placeholder="Any comments or suggestions? (optional)"
+          ></textarea>
+          <button class="btn go" id="b" type="submit">Send feedback</button>
+          <p id="msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      Team Byte Me &middot; FEU Alabang &middot; CS Expo 2026<br />#FEUA_CS_EXPO2026
+      #BuildingTomorrow
+    </footer>
+
+    <script>
+      const DB =
+        "https://testtrust-b34d3-default-rtdb.firebaseio.com/expo_ratings.json";
+      const words = ["Poor", "Fair", "Good", "Great", "Excellent"];
+      const f = document.getElementById("f"),
+        msg = document.getElementById("msg"),
+        b = document.getElementById("b");
+      console.assert(
+        f.querySelectorAll(".stars input").length === 5,
+        "need 5 star inputs",
+      );
+
+      const done = () => {
+        f.innerHTML =
+          "<p class='thanks'>Thank you! Your feedback helps Team Byte Me.</p>";
+      };
+      // shortcut: one rating per browser via localStorage (easy to bypass); upgrade only if you need strict one-per-person
+      try {
+        if (localStorage.getItem("tt_rated")) done();
+      } catch (_) {}
+
+      f.addEventListener("change", (e) => {
+        if (e.target.name === "r")
+          document.getElementById("hint").textContent =
+            words[e.target.value - 1];
+      });
+
+      f.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!f.r.value) {
+          msg.textContent = "Please tap a star first.";
+          return;
+        }
+        b.disabled = true;
+        msg.textContent = "Sending...";
+        try {
+          const res = await fetch(DB, {
+            method: "POST",
+            body: JSON.stringify({
+              rating: +f.r.value,
+              comment: f.comment.value.trim().slice(0, 300),
+              ts: { ".sv": "timestamp" },
+            }),
+          });
+          if (!res.ok) throw new Error(res.status);
+          try {
+            localStorage.setItem("tt_rated", "1");
+          } catch (_) {}
+          done();
+        } catch (_) {
+          b.disabled = false;
+          msg.textContent =
+            "Could not send. Check your connection and try again.";
+        }
+      });
+    </script>
+  </body>
+</html>
