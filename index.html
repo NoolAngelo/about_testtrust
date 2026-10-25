@@ -2,28 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TestTrust | Monitor freely. Trust deeply.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#08285f" />
     <meta
       name="description"
-      content="TestTrust is a cheating-detection web extension for Chromium browsers that helps proctors secure online exams, with no camera."
+      content="TestTrust is a cheating-detection web extension for Chromium browsers that helps proctors and educators secure online exams without camera or biometric monitoring."
     />
+    <title>TestTrust | Monitor freely. Trust deeply.</title>
     <style>
       :root {
-        --navy: #06285a;
-        --blue: #0a78fa;
+        --navy: #08285f;
+        --navy-2: #0b3679;
+        --blue: #1677ff;
         --sky: #4fa6ff;
-        --bg: #f2f7fe;
-        --ink: #0b1f4d;
-        --mut: #4a5a75;
+        --pale: #eaf3ff;
+        --bg: #f5f9ff;
+        --ink: #102754;
+        --muted: #526582;
+        --line: #d8e5f7;
+        --white: #fff;
+        --shadow: 0 18px 48px rgba(8, 40, 95, 0.12);
+        --radius: 22px;
       }
       * {
         box-sizing: border-box;
       }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 90px;
+      }
       body {
         margin: 0;
         font:
-          16px/1.55 system-ui,
+          16px/1.6 Inter,
+          ui-sans-serif,
+          system-ui,
           -apple-system,
           "Segoe UI",
           Roboto,
@@ -32,358 +45,1481 @@
         color: var(--ink);
         background: var(--bg);
       }
-      header,
-      section,
-      footer {
-        padding: 36px 20px;
+      a {
+        color: inherit;
       }
-      .wrap {
-        max-width: 640px;
-        margin: auto;
+      button,
+      input,
+      textarea {
+        font: inherit;
       }
-      header {
-        background: linear-gradient(160deg, var(--navy), #0a4fb8);
-        color: #fff;
-        text-align: center;
+      .container {
+        width: min(1120px, calc(100% - 40px));
+        margin-inline: auto;
       }
-      h1 {
-        font-size: 2.6rem;
-        margin: 0.2em 0 0;
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(216, 229, 247, 0.85);
       }
-      h1 span,
-      h2 span {
-        color: var(--sky);
+      .nav {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
       }
-      h2 {
-        margin: 0 0 0.6em;
-        font-size: 1.5rem;
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        text-decoration: none;
+        font-weight: 900;
+        font-size: 1.55rem;
+        letter-spacing: -0.06em;
+        color: var(--navy);
       }
-      h2 span {
+      .brand span span {
         color: var(--blue);
       }
-      .tag {
-        font-style: italic;
-        opacity: 0.9;
-        margin: 0.2em 0 1em;
+      .logo {
+        width: 42px;
+        height: 48px;
+        flex: none;
       }
-      .btn {
-        display: inline-block;
-        background: #fff;
-        color: var(--navy);
-        font: 700 1rem inherit;
-        padding: 12px 22px;
-        border-radius: 999px;
+      .navlinks {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      .navlinks a {
         text-decoration: none;
-        border: 0;
-        cursor: pointer;
+        color: #334969;
+        font-weight: 650;
+        font-size: 0.94rem;
       }
-      .btn.go {
+      .navlinks a:hover {
+        color: var(--blue);
+      }
+      .navlinks .nav-cta {
         background: var(--blue);
         color: #fff;
-        width: 100%;
-        margin-top: 12px;
+        padding: 10px 17px;
+        border-radius: 999px;
       }
-      .btn:disabled {
-        opacity: 0.6;
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 76px 0 72px;
+        background:
+          radial-gradient(
+            ellipse at 85% 18%,
+            rgba(79, 166, 255, 0.22),
+            transparent 36%
+          ),
+          linear-gradient(135deg, #fff 0%, #f0f6ff 68%, #e4efff 100%);
       }
-      .grid {
+      .hero:before {
+        content: "";
+        position: absolute;
+        width: 460px;
+        height: 460px;
+        border: 1px solid rgba(22, 119, 255, 0.12);
+        border-radius: 50%;
+        right: -150px;
+        top: -200px;
+        box-shadow:
+          0 0 0 35px rgba(22, 119, 255, 0.035),
+          0 0 0 75px rgba(22, 119, 255, 0.025);
+      }
+      .hero-grid {
+        position: relative;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-        gap: 12px;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
       }
-      .card {
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #cfe1ff;
         background: #fff;
-        border-radius: 14px;
-        padding: 16px;
-        box-shadow: 0 2px 10px #06285a1a;
+        border-radius: 999px;
+        padding: 7px 13px;
+        color: var(--navy-2);
+        font-size: 0.82rem;
+        font-weight: 750;
       }
-      .card b {
-        display: block;
-        margin-bottom: 4px;
-      }
-      .n {
-        display: inline-grid;
-        place-items: center;
-        width: 30px;
-        height: 30px;
+      .eyebrow-dot {
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         background: var(--blue);
-        color: #fff;
-        font-weight: 700;
-        margin-bottom: 8px;
+        box-shadow: 0 0 0 4px #e0edff;
       }
-      ul.chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
+      .hero h1 {
+        font-size: clamp(2.8rem, 5.2vw, 4.65rem);
+        line-height: 1.02;
+        letter-spacing: -0.065em;
+        margin: 22px 0 14px;
+        color: var(--navy);
+      }
+      .hero h1 span {
+        color: var(--blue);
+      }
+      .tagline {
+        font-size: 1.2rem;
+        font-weight: 750;
+        color: var(--navy-2);
+        margin: 0 0 12px;
+      }
+      .hero-copy {
+        max-width: 580px;
+        color: var(--muted);
+        font-size: 1.08rem;
         margin: 0;
       }
-      .chips li {
-        list-style: none;
-        background: #dcebfc;
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        border: 0;
         border-radius: 999px;
-        padding: 6px 14px;
-        font-weight: 600;
+        padding: 13px 20px;
+        text-decoration: none;
+        font-weight: 800;
+        cursor: pointer;
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s,
+          background 0.18s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(22, 119, 255, 0.22);
+      }
+      .btn-primary:hover {
+        background: #0868eb;
+      }
+      .btn-secondary {
+        background: #fff;
+        color: var(--navy);
+        border: 1px solid #d6e4f8;
+      }
+      .trust-note {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 18px;
+      }
+      .trust-note svg {
+        color: var(--blue);
+        flex: none;
+      }
+      .dashboard-wrap {
+        position: relative;
+        padding: 12px;
+      }
+      .dashboard-wrap:before {
+        content: "";
+        position: absolute;
+        inset: 4% -3% -3% 4%;
+        background: linear-gradient(145deg, #c8e0ff, #edf5ff);
+        border-radius: 30px;
+        transform: rotate(3deg);
+      }
+      .dashboard {
+        position: relative;
+        background: #fff;
+        border: 1px solid #d7e4f6;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transform: rotate(-1deg);
+      }
+      .dash-top {
+        background: var(--navy);
+        color: #fff;
+        padding: 15px 17px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .dash-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 0.88rem;
+        font-weight: 800;
+      }
+      .mini-logo {
+        width: 25px;
+        height: 28px;
+      }
+      .live {
+        font-size: 0.72rem;
+        background: #164d96;
+        border: 1px solid #3d75bd;
+        padding: 4px 8px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .dash-body {
+        padding: 17px;
+        background: #f7faff;
+      }
+      .dash-label {
+        font-size: 0.73rem;
+        font-weight: 800;
+        color: #5a6d8b;
+        margin-bottom: 10px;
+      }
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+      }
+      .metric {
+        background: #fff;
+        border: 1px solid #e0e9f7;
+        border-radius: 12px;
+        padding: 12px 10px;
+      }
+      .metric strong {
+        display: block;
+        font-size: 1.2rem;
+        color: var(--navy);
+      }
+      .metric span {
+        font-size: 0.69rem;
+        color: var(--muted);
+      }
+      .dash-lower {
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .dash-panel {
+        background: #fff;
+        border: 1px solid #e0e9f7;
+        border-radius: 12px;
+        padding: 12px;
+        min-height: 190px;
+      }
+      .panel-title {
+        font-size: 0.75rem;
+        font-weight: 850;
+        margin-bottom: 12px;
+      }
+      .student {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 9px 0;
+        border-bottom: 1px solid #edf2fa;
+        font-size: 0.72rem;
+      }
+      .student:last-child {
+        border-bottom: 0;
+      }
+      .student-name {
+        font-weight: 750;
+      }
+      .student-sub {
+        font-size: 0.65rem;
+        color: #73829b;
+      }
+      .status {
+        font-size: 0.64rem;
+        font-weight: 800;
+        border-radius: 999px;
+        padding: 3px 7px;
+        background: #e5f6ee;
+        color: #137849;
+      }
+      .status.review {
+        background: #fff3d7;
+        color: #8c5c00;
+      }
+      .event-placeholder {
+        background: #f5f8fd;
+        border-radius: 9px;
+        padding: 11px;
+        color: #6b7c96;
+        font-size: 0.7rem;
+        line-height: 1.5;
+      }
+      .event-placeholder b {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 4px;
+      }
+      section {
+        padding: 76px 0;
+      }
+      .section-head {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 34px;
+      }
+      .kicker {
+        color: var(--blue);
+        font-size: 0.8rem;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+      .section-head h2,
+      .split-copy h2 {
+        font-size: clamp(2rem, 3.5vw, 2.8rem);
+        line-height: 1.15;
+        letter-spacing: -0.045em;
+        color: var(--navy);
+        margin: 9px 0 12px;
+      }
+      .section-head p,
+      .split-copy p {
+        color: var(--muted);
+        margin: 0;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .feature {
+        padding: 25px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: 0 7px 22px rgba(8, 40, 95, 0.045);
+      }
+      .icon-box {
+        width: 49px;
+        height: 49px;
+        display: grid;
+        place-items: center;
+        background: var(--pale);
+        color: var(--blue);
+        border-radius: 15px;
+        margin-bottom: 17px;
+      }
+      .feature h3 {
+        font-size: 1.12rem;
+        margin: 0 0 7px;
+        color: var(--navy);
+      }
+      .feature p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
       }
       .alt {
         background: #fff;
+        border-top: 1px solid #e4edfa;
+        border-bottom: 1px solid #e4edfa;
       }
-      fieldset {
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        position: relative;
+      }
+      .step {
+        position: relative;
+        padding: 25px 23px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+      .step-num {
+        width: 39px;
+        height: 39px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 900;
+        margin-bottom: 16px;
+      }
+      .step h3 {
+        margin: 0 0 7px;
+        font-size: 1.06rem;
+        color: var(--navy);
+      }
+      .step p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+      .step-arrow {
+        position: absolute;
+        right: -19px;
+        top: 40px;
+        z-index: 2;
+        color: var(--blue);
+        font-size: 1.3rem;
+        font-weight: 900;
+      }
+      .event-chips {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .chip {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 12px 17px;
+        border: 1px solid #d4e5ff;
+        background: #fff;
+        border-radius: 999px;
+        font-weight: 750;
+        color: var(--navy-2);
+        box-shadow: 0 5px 15px rgba(8, 40, 95, 0.04);
+      }
+      .chip svg {
+        color: var(--blue);
+        flex: none;
+      }
+      .privacy-box {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 35px;
+        align-items: center;
+        background: linear-gradient(135deg, var(--navy), #0d448f);
+        border-radius: 28px;
+        padding: 38px;
+        color: #fff;
+        box-shadow: var(--shadow);
+      }
+      .privacy-box h2 {
+        font-size: clamp(1.9rem, 3vw, 2.5rem);
+        line-height: 1.13;
+        letter-spacing: -0.04em;
+        margin: 0 0 12px;
+      }
+      .privacy-box p {
+        margin: 0;
+        color: #d7e7ff;
+      }
+      .privacy-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .privacy-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 14px;
+        padding: 15px;
+        font-size: 0.9rem;
+      }
+      .privacy-item svg {
+        flex: none;
+        color: #75bbff;
+        margin-top: 2px;
+      }
+      .privacy-item b {
+        display: block;
+        margin-bottom: 2px;
+      }
+      .rating-section {
+        background: linear-gradient(180deg, #edf5ff, #f7faff);
+      }
+      .rating-card {
+        max-width: 660px;
+        margin: auto;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: clamp(24px, 5vw, 42px);
+        box-shadow: var(--shadow);
+      }
+      .rating-card .section-head {
+        margin-bottom: 22px;
+      }
+      .rating-card form {
+        display: grid;
+        gap: 16px;
+      }
+      .stars-field {
         border: 0;
         padding: 0;
         margin: 0;
         text-align: center;
       }
-      legend {
-        font-weight: 700;
-        margin: 0 auto 6px;
+      .stars-field legend {
+        font-weight: 800;
+        margin: 0 auto 8px;
       }
-      .row {
+      .star-row {
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;
+        gap: 3px;
       }
-      .row input {
+      .star-row input {
         position: absolute;
         opacity: 0;
+        width: 1px;
+        height: 1px;
       }
-      .row label {
-        font-size: 3rem;
+      .star-row label {
+        font-size: clamp(2.7rem, 9vw, 3.6rem);
         line-height: 1;
-        padding: 0 4px;
         color: #cbd5e1;
         cursor: pointer;
+        padding: 0 3px;
+        transition:
+          color 0.12s,
+          transform 0.12s;
       }
-      .row input:checked ~ label,
-      .row label:hover,
-      .row label:hover ~ label {
-        color: #f59e0b;
+      .star-row label:hover {
+        transform: scale(1.08);
       }
-      .row input:focus-visible + label {
+      .star-row input:checked ~ label,
+      .star-row label:hover,
+      .star-row label:hover ~ label {
+        color: #f5a623;
+      }
+      .star-row input:focus-visible + label {
         outline: 3px solid var(--blue);
+        outline-offset: 3px;
         border-radius: 6px;
       }
-      #hint {
+      .hint {
         min-height: 1.5em;
-        font-weight: 700;
+        text-align: center;
         color: var(--blue);
-        margin: 4px 0 10px;
+        font-weight: 800;
+        margin: 0;
+      }
+      .field-label {
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
       textarea {
+        display: block;
         width: 100%;
-        font: inherit;
-        padding: 10px;
-        border: 1px solid #b5c4dc;
-        border-radius: 10px;
         resize: vertical;
+        min-height: 110px;
+        border: 1px solid #cbd8eb;
+        border-radius: 13px;
+        padding: 13px;
+        color: var(--ink);
+        background: #fcfdff;
       }
-      #msg {
-        min-height: 1.4em;
-        color: var(--mut);
+      textarea:focus {
+        outline: 3px solid #cfe2ff;
+        border-color: var(--blue);
+      }
+      .btn-submit {
+        width: 100%;
+        background: var(--blue);
+        color: #fff;
+      }
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: wait;
+        transform: none;
+      }
+      .form-msg {
         text-align: center;
-        margin: 8px 0 0;
+        min-height: 1.4em;
+        color: var(--muted);
+        margin: 0;
+        font-size: 0.92rem;
       }
       .thanks {
         text-align: center;
-        font-size: 1.2rem;
-        font-weight: 700;
+        padding: 20px 0;
       }
-      footer {
+      .thanks h3 {
+        font-size: 1.4rem;
+        color: var(--navy);
+        margin: 10px 0 5px;
+      }
+      .thanks p {
+        color: var(--muted);
+        margin: 0;
+      }
+      .footer {
+        background: #061e49;
+        color: #d7e7ff;
+        padding: 31px 0;
         text-align: center;
-        color: var(--mut);
+      }
+      .footer-brand {
+        font-size: 1.25rem;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: -0.04em;
+      }
+      .footer-brand span {
+        color: var(--sky);
+      }
+      .footer p {
+        margin: 5px 0;
+        color: #b8cbe9;
         font-size: 0.9rem;
+      }
+      .footer .by {
+        margin-top: 12px;
+        color: #fff;
+        font-weight: 750;
+      }
+      .footer .by span {
+        color: var(--sky);
+      }
+      @media (max-width: 850px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 35px;
+        }
+        .hero-copy-wrap {
+          max-width: 700px;
+        }
+        .dashboard-wrap {
+          max-width: 650px;
+          width: 100%;
+          margin: 0 auto;
+        }
+        .features {
+          grid-template-columns: 1fr 1fr;
+        }
+        .privacy-box {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .navlinks {
+          gap: 14px;
+        }
+        .navlinks a:not(.nav-cta) {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .container {
+          width: min(100% - 28px, 1120px);
+        }
+        .nav {
+          min-height: 66px;
+        }
+        .brand {
+          font-size: 1.35rem;
+        }
+        .logo {
+          width: 36px;
+          height: 41px;
+        }
+        .navlinks .nav-cta {
+          padding: 9px 13px;
+          font-size: 0.85rem;
+        }
+        .hero {
+          padding: 52px 0 48px;
+        }
+        .hero-grid {
+          gap: 25px;
+        }
+        .hero h1 {
+          font-size: clamp(2.6rem, 13vw, 3.7rem);
+        }
+        .hero-copy {
+          font-size: 1rem;
+        }
+        .actions {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+        .btn {
+          width: 100%;
+        }
+        section {
+          padding: 55px 0;
+        }
+        .features,
+        .steps {
+          grid-template-columns: 1fr;
+        }
+        .step-arrow {
+          display: none;
+        }
+        .metric-row {
+          gap: 6px;
+        }
+        .metric {
+          padding: 9px 7px;
+        }
+        .metric strong {
+          font-size: 1.05rem;
+        }
+        .dash-lower {
+          grid-template-columns: 1fr;
+        }
+        .dash-panel {
+          min-height: unset;
+        }
+        .dash-panel:last-child {
+          display: none;
+        }
+        .dashboard-wrap {
+          padding: 5px;
+        }
+        .dash-body {
+          padding: 11px;
+        }
+        .dash-top {
+          padding: 12px;
+        }
+        .privacy-box {
+          padding: 25px 20px;
+          border-radius: 22px;
+        }
+        .privacy-list {
+          grid-template-columns: 1fr;
+        }
+        .rating-card {
+          padding: 24px 18px;
+        }
+        .chip {
+          width: 100%;
+          justify-content: flex-start;
+        }
+        .section-head {
+          margin-bottom: 25px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *:before,
+        *:after {
+          transition: none !important;
+          animation: none !important;
+        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="wrap">
-        <!-- swap this SVG for <img src="logo.png" width="72" alt="TestTrust logo"> to use your real logo -->
-        <svg viewBox="0 0 64 74" width="72" aria-hidden="true">
-          <path
-            d="M32 2 60 12v28c0 16-12 27-28 32C16 67 4 56 4 40V12z"
-            fill="#0A78FA"
-          />
-          <path
-            d="M20 38l9 9 16-18"
-            fill="none"
-            stroke="#fff"
-            stroke-width="6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <h1>Test<span>Trust</span></h1>
-        <p class="tag">Monitor freely. Trust deeply.</p>
-        <p>
-          A cheating-detection web extension for Chromium browsers that helps
-          proctors and educators secure online exams, with no camera.
-        </p>
-        <a class="btn" href="#rate">Rate TestTrust</a>
-      </div>
-    </header>
-
-    <section>
-      <div class="wrap">
-        <h2>Why <span>TestTrust?</span></h2>
-        <div class="grid">
-          <div class="card">
-            <b>Private</b>No camera, microphone, or biometric data. It watches
-            the browser, not the student.
-          </div>
-          <div class="card">
-            <b>Real-time</b>Suspicious activity reaches the proctor's dashboard
-            instantly.
-          </div>
-          <div class="card">
-            <b>Simple</b>Works on Chrome, Edge, and Opera. Easy for proctors to
-            use.
-          </div>
+    <nav class="topbar" aria-label="Main navigation">
+      <div class="container nav">
+        <a class="brand" href="#home" aria-label="TestTrust home">
+          <svg class="logo" viewBox="0 0 64 74" aria-hidden="true">
+            <path
+              d="M32 2 60 12v28c0 16-12 27-28 32C16 67 4 56 4 40V12z"
+              fill="#1677ff"
+            />
+            <path
+              d="M20 38l9 9 16-18"
+              fill="none"
+              stroke="#fff"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>Test<span>Trust</span></span>
+        </a>
+        <div class="navlinks">
+          <a href="#features">Why TestTrust</a><a href="#how">How it works</a
+          ><a href="#events">What it notices</a
+          ><a class="nav-cta" href="#rate">Rate TestTrust</a>
         </div>
       </div>
-    </section>
+    </nav>
 
-    <section class="alt">
-      <div class="wrap">
-        <h2>How it <span>works</span></h2>
-        <div class="grid">
-          <div class="card">
-            <span class="n">1</span><b>Student takes the exam</b>The extension
-            runs quietly in their browser.
-          </div>
-          <div class="card">
-            <span class="n">2</span><b>Events are sent</b>Saved instantly to a
-            secure cloud database.
-          </div>
-          <div class="card">
-            <span class="n">3</span><b>Proctor reviews</b>The dashboard ranks
-            students from Low to Critical risk.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <h2>What it <span>notices</span></h2>
-        <ul class="chips">
-          <li>Tab switching</li>
-          <li>Window or app switching</li>
-          <li>Copy and paste</li>
-          <li>Idle time</li>
-          <li>Detached tabs</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="alt" id="rate">
-      <div class="wrap">
-        <h2>Rate <span>TestTrust</span></h2>
-        <form id="f">
-          <fieldset class="stars">
-            <legend>How would you rate TestTrust?</legend>
-            <div class="row">
-              <input type="radio" name="r" id="s5" value="5" /><label
-                for="s5"
-                title="5 stars"
-                >&#9733;</label
-              >
-              <input type="radio" name="r" id="s4" value="4" /><label
-                for="s4"
-                title="4 stars"
-                >&#9733;</label
-              >
-              <input type="radio" name="r" id="s3" value="3" /><label
-                for="s3"
-                title="3 stars"
-                >&#9733;</label
-              >
-              <input type="radio" name="r" id="s2" value="2" /><label
-                for="s2"
-                title="2 stars"
-                >&#9733;</label
-              >
-              <input type="radio" name="r" id="s1" value="1" /><label
-                for="s1"
-                title="1 star"
-                >&#9733;</label
+    <main id="home">
+      <header class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy-wrap">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span> A smarter approach to online
+              exams
+            </div>
+            <h1>Test<span>Trust</span></h1>
+            <p class="tagline">Monitor freely. Trust deeply.</p>
+            <p class="hero-copy">
+              A cheating-detection web extension for Chromium browsers that
+              helps proctors and educators secure online exams—with a focus on
+              browser activity, not camera surveillance.
+            </p>
+            <div class="actions">
+              <a class="btn btn-primary" href="#how"
+                >Explore how it works <span aria-hidden="true">→</span></a
+              ><a class="btn btn-secondary" href="#rate"
+                >★ &nbsp; Rate TestTrust</a
               >
             </div>
-          </fieldset>
-          <div id="hint" aria-live="polite"></div>
-          <label for="c" class="sr">Comments (optional)</label>
-          <textarea
-            id="c"
-            name="comment"
-            rows="3"
-            maxlength="300"
-            placeholder="Any comments or suggestions? (optional)"
-          ></textarea>
-          <button class="btn go" id="b" type="submit">Send feedback</button>
-          <p id="msg" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
+            <div class="trust-note">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="m8.5 12 2.2 2.2 4.8-5"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              No camera, microphone, or biometric monitoring.
+            </div>
+          </div>
+          <div
+            class="dashboard-wrap"
+            aria-label="Illustrative preview of the TestTrust proctor dashboard"
+          >
+            <div class="dashboard">
+              <div class="dash-top">
+                <div class="dash-brand">
+                  <svg class="mini-logo" viewBox="0 0 64 74" aria-hidden="true">
+                    <path
+                      d="M32 2 60 12v28c0 16-12 27-28 32C16 67 4 56 4 40V12z"
+                      fill="#4fa6ff"
+                    />
+                    <path
+                      d="M20 38l9 9 16-18"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  TestTrust Monitoring Dashboard
+                </div>
+                <span class="live">● Dashboard preview</span>
+              </div>
+              <div class="dash-body">
+                <div class="dash-label">SESSION OVERVIEW</div>
+                <div class="metric-row">
+                  <div class="metric">
+                    <strong>Live</strong><span>Session status</span>
+                  </div>
+                  <div class="metric">
+                    <strong>Events</strong><span>Activity logs</span>
+                  </div>
+                  <div class="metric">
+                    <strong>Review</strong><span>Proctor action</span>
+                  </div>
+                </div>
+                <div class="dash-lower">
+                  <div class="dash-panel">
+                    <div class="panel-title">Student activity</div>
+                    <div class="student">
+                      <div>
+                        <div class="student-name">Student session</div>
+                        <div class="student-sub">Browser activity tracked</div>
+                      </div>
+                      <span class="status">Active</span>
+                    </div>
+                    <div class="student">
+                      <div>
+                        <div class="student-name">Event history</div>
+                        <div class="student-sub">Review flagged events</div>
+                      </div>
+                      <span class="status review">Review</span>
+                    </div>
+                    <div class="student">
+                      <div>
+                        <div class="student-name">Risk indicator</div>
+                        <div class="student-sub">Supports proctor review</div>
+                      </div>
+                      <span class="status">View</span>
+                    </div>
+                  </div>
+                  <div class="dash-panel">
+                    <div class="panel-title">Activity details</div>
+                    <div class="event-placeholder">
+                      <b>Event details appear here</b>Proctors can review
+                      detected browser activity and decide whether follow-up is
+                      needed.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-    <footer>
-      Team Byte Me &middot; FEU Alabang &middot; CS Expo 2026<br />#FEUA_CS_EXPO2026
-      #BuildingTomorrow
+      <section id="features">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Why TestTrust?</div>
+            <h2>More trust. Less intrusion.</h2>
+            <p>
+              Tools that help educators review online exam activity without
+              relying on camera-based monitoring.
+            </p>
+          </div>
+          <div class="features">
+            <article class="feature">
+              <div class="icon-box">
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="m8.5 12 2.2 2.2 4.8-5"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>Privacy-focused</h3>
+              <p>
+                No camera, microphone, or biometric data. TestTrust focuses on
+                supported browser events.
+              </p>
+            </article>
+            <article class="feature">
+              <div class="icon-box">
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 12h4l2.2-7L14 19l2.2-7H21"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <h3>Real-time monitoring</h3>
+              <p>
+                Suspicious browser activity can be sent to the proctor dashboard
+                for review.
+              </p>
+            </article>
+            <article class="feature">
+              <div class="icon-box">
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="16"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M3 9h18M8 9v11"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                </svg>
+              </div>
+              <h3>Proctor dashboard</h3>
+              <p>
+                Review event details and risk indicators in one place to support
+                exam supervision.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="alt" id="how">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Simple workflow</div>
+            <h2>How it works</h2>
+            <p>
+              Three parts work together to help proctors review browser activity
+              during an online exam.
+            </p>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <div class="step-num">1</div>
+              <h3>Student takes the exam</h3>
+              <p>
+                The TestTrust extension runs in the student's supported Chromium
+                browser and monitors configured browser events.
+              </p>
+              <span class="step-arrow" aria-hidden="true">→</span>
+            </article>
+            <article class="step">
+              <div class="step-num">2</div>
+              <h3>Events are stored</h3>
+              <p>
+                Session activity is sent to the Firebase cloud backend for
+                storage and dashboard use.
+              </p>
+              <span class="step-arrow" aria-hidden="true">→</span>
+            </article>
+            <article class="step">
+              <div class="step-num">3</div>
+              <h3>Proctor reviews activity</h3>
+              <p>
+                The dashboard helps proctors review events and risk indicators.
+                A flag is a signal to review, not proof of cheating.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="events">
+        <div class="container">
+          <div class="section-head">
+            <div class="kicker">Browser event detection</div>
+            <h2>What TestTrust notices</h2>
+            <p>
+              Configured browser behaviors can be recorded and reviewed by the
+              proctor.
+            </p>
+          </div>
+          <div class="event-chips">
+            <div class="chip">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="16"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="M3 9h18"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                /></svg
+              >Tab switching
+            </div>
+            <div class="chip">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="13"
+                  height="13"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="M8 20h11a2 2 0 0 0 2-2V9"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                /></svg
+              >Window or app switching
+            </div>
+            <div class="chip">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="8"
+                  y="8"
+                  width="12"
+                  height="12"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                /></svg
+              >Copy and paste
+            </div>
+            <div class="chip">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="9"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="M12 7v5l3 2"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                /></svg
+              >Idle time
+            </div>
+            <div class="chip">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="4"
+                  width="18"
+                  height="15"
+                  rx="2"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
+                <path
+                  d="m9 9 6 6m0-6-6 6"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                /></svg
+              >Detached tabs
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="alt">
+        <div class="container">
+          <div class="privacy-box">
+            <div>
+              <div class="kicker" style="color: #82c4ff">Privacy by design</div>
+              <h2>Monitor the browser, not the student.</h2>
+              <p>
+                TestTrust is designed to help with exam supervision while
+                avoiding camera-based monitoring.
+              </p>
+            </div>
+            <div class="privacy-list">
+              <div class="privacy-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m5 12 4 4L19 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div><b>No camera</b>No webcam monitoring.</div>
+              </div>
+              <div class="privacy-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m5 12 4 4L19 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div><b>No microphone</b>No audio monitoring.</div>
+              </div>
+              <div class="privacy-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m5 12 4 4L19 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div>
+                  <b>No biometric data</b>No face or fingerprint identification.
+                </div>
+              </div>
+              <div class="privacy-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m5 12 4 4L19 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <div>
+                  <b>Human review</b>Event flags should be reviewed in context.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rating-section" id="rate">
+        <div class="container">
+          <div class="rating-card">
+            <div class="section-head">
+              <div class="kicker">Help us improve</div>
+              <h2>Rate <span style="color: var(--blue)">TestTrust</span></h2>
+              <p>
+                Share your impression of the project. Your feedback helps Team
+                Byte Me improve the experience.
+              </p>
+            </div>
+            <form id="rating-form">
+              <fieldset class="stars-field">
+                <legend>How would you rate TestTrust?</legend>
+                <div class="star-row">
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="star5"
+                    value="5"
+                  /><label for="star5" title="5 stars" aria-label="5 stars"
+                    >★</label
+                  >
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="star4"
+                    value="4"
+                  /><label for="star4" title="4 stars" aria-label="4 stars"
+                    >★</label
+                  >
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="star3"
+                    value="3"
+                  /><label for="star3" title="3 stars" aria-label="3 stars"
+                    >★</label
+                  >
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="star2"
+                    value="2"
+                  /><label for="star2" title="2 stars" aria-label="2 stars"
+                    >★</label
+                  >
+                  <input
+                    type="radio"
+                    name="rating"
+                    id="star1"
+                    value="1"
+                  /><label for="star1" title="1 star" aria-label="1 star"
+                    >★</label
+                  >
+                </div>
+              </fieldset>
+              <p id="rating-hint" class="hint" aria-live="polite"></p>
+              <div>
+                <label class="field-label" for="comment"
+                  >Comments
+                  <span style="font-weight: 500; color: var(--muted)"
+                    >(optional)</span
+                  ></label
+                ><textarea
+                  id="comment"
+                  name="comment"
+                  maxlength="300"
+                  rows="4"
+                  placeholder="What did you like, or what could we improve?"
+                ></textarea>
+              </div>
+              <button class="btn btn-submit" id="submit-rating" type="submit">
+                Send feedback <span aria-hidden="true">→</span>
+              </button>
+              <p
+                id="form-message"
+                class="form-msg"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-brand">Test<span>Trust</span></div>
+        <p>Detect · Protect · Ensure</p>
+        <p>FEU Alabang · CS Expo 2026</p>
+        <p class="by">by: <span>Byte Me</span></p>
+        <p>#FEUA_CS_EXPO2026 &nbsp; #BuildingTomorrow</p>
+      </div>
     </footer>
 
     <script>
-      const DB =
+      // Keeps the existing Firebase Realtime Database endpoint and rating payload structure.
+      const DATABASE_URL =
         "https://testtrust-b34d3-default-rtdb.firebaseio.com/expo_ratings.json";
-      const words = ["Poor", "Fair", "Good", "Great", "Excellent"];
-      const f = document.getElementById("f"),
-        msg = document.getElementById("msg"),
-        b = document.getElementById("b");
-      console.assert(
-        f.querySelectorAll(".stars input").length === 5,
-        "need 5 star inputs",
-      );
+      const ratingForm = document.getElementById("rating-form");
+      const ratingHint = document.getElementById("rating-hint");
+      const formMessage = document.getElementById("form-message");
+      const submitButton = document.getElementById("submit-rating");
+      const ratingWords = ["Poor", "Fair", "Good", "Great", "Excellent"];
 
-      const done = () => {
-        f.innerHTML =
-          "<p class='thanks'>Thank you! Your feedback helps Team Byte Me.</p>";
-      };
-      // shortcut: one rating per browser via localStorage (easy to bypass); upgrade only if you need strict one-per-person
+      function showThanks() {
+        ratingForm.innerHTML =
+          '<div class="thanks"><div class="icon-box" style="margin:0 auto 14px"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Thank you for your feedback!</h3><p>Your response helps Team Byte Me improve TestTrust.</p></div>';
+      }
+
       try {
-        if (localStorage.getItem("tt_rated")) done();
-      } catch (_) {}
+        if (localStorage.getItem("tt_rated")) showThanks();
+      } catch (_) {
+        /* localStorage may be unavailable in private browsing */
+      }
 
-      f.addEventListener("change", (e) => {
-        if (e.target.name === "r")
-          document.getElementById("hint").textContent =
-            words[e.target.value - 1];
+      ratingForm.addEventListener("change", (event) => {
+        if (event.target.name === "rating")
+          ratingHint.textContent =
+            ratingWords[Number(event.target.value) - 1] || "";
       });
 
-      f.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        if (!f.r.value) {
-          msg.textContent = "Please tap a star first.";
+      ratingForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const selectedRating = ratingForm.querySelector(
+          'input[name="rating"]:checked',
+        );
+        if (!selectedRating) {
+          formMessage.textContent = "Please select a star rating first.";
+          ratingForm.querySelector('input[name="rating"]')?.focus();
           return;
         }
-        b.disabled = true;
-        msg.textContent = "Sending...";
+
+        submitButton.disabled = true;
+        formMessage.textContent = "Sending your feedback…";
         try {
-          const res = await fetch(DB, {
+          const response = await fetch(DATABASE_URL, {
             method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              rating: +f.r.value,
-              comment: f.comment.value.trim().slice(0, 300),
+              rating: Number(selectedRating.value),
+              comment: document
+                .getElementById("comment")
+                .value.trim()
+                .slice(0, 300),
               ts: { ".sv": "timestamp" },
             }),
           });
-          if (!res.ok) throw new Error(res.status);
+          if (!response.ok)
+            throw new Error("Firebase returned HTTP " + response.status);
           try {
             localStorage.setItem("tt_rated", "1");
           } catch (_) {}
-          done();
-        } catch (_) {
-          b.disabled = false;
-          msg.textContent =
-            "Could not send. Check your connection and try again.";
+          showThanks();
+        } catch (error) {
+          submitButton.disabled = false;
+          formMessage.textContent =
+            "We couldn't send your feedback. Check your connection and try again.";
         }
       });
     </script>
